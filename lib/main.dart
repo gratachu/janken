@@ -24,6 +24,11 @@ class JankenPage extends StatefulWidget {
 
 class _JankenPageState extends State<JankenPage> {
   String myHand = "✊";
+  void selectHand(String hand) {
+    setState(() {
+      myHand = hand;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +47,9 @@ class _JankenPageState extends State<JankenPage> {
             const SizedBox(
               height: 32,
             ),
-            const Text(
-              '✊',
-              style: TextStyle(fontSize: 24),
+            Text(
+              myHand,
+              style: TextStyle(fontSize: 32),
             ),
             const SizedBox(
               height: 32,
@@ -54,19 +59,19 @@ class _JankenPageState extends State<JankenPage> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    print("グー");
+                    selectHand("✊");
                   },
                   child: const Text('✊'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    print("チョキ");
+                    selectHand("✌️");
                   },
                   child: const Text('✌️'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    print("パー");
+                    selectHand("✋");
                   },
                   child: const Text('✋'),
                 ),
