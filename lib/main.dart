@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -24,10 +26,45 @@ class JankenPage extends StatefulWidget {
 
 class _JankenPageState extends State<JankenPage> {
   String myHand = "✊";
-  void selectHand(String hand) {
-    setState(() {
-      myHand = hand;
-    });
+  String computerHand = "✊";
+  String result = "勝負スタート！！";
+  
+  void selectHand(String selectedHand) {
+    myHand = selectedHand;
+    generateComputerHand();
+    judgeJanken();
+    setState(() {});
+  }
+
+  void generateComputerHand() {
+    computerHand = numToHand(Random().nextInt(3));
+  }
+
+  String numToHand(int num) {
+    switch(num) {
+      case 0:
+        return "✊";
+      case 1:
+        return "✌️";
+      case 2:
+        return "✋";
+      default:
+        return "✊";
+    }
+  }
+
+  void judgeJanken() {
+    if (myHand == computerHand) {
+      result = "あいこ";
+    } else if (myHand == "✊" && computerHand == "✌️") {
+      result = "勝ち";
+    } else if (myHand == "✌️" && computerHand == "✋") {
+      result = "勝ち";
+    } else if (myHand == "✋" && computerHand == "✊") {
+      result = "勝ち";
+    } else {
+      result = "負け";
+    }
   }
 
   @override
@@ -40,6 +77,21 @@ class _JankenPageState extends State<JankenPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+              result,
+              style: const TextStyle(fontSize: 32),
+            ),
+            const Text(
+            '相手の手は...',
+            style: TextStyle(fontSize: 24),
+            ),
+            Text(
+              computerHand,
+              style: const TextStyle(fontSize: 32),
+            ),
+            const SizedBox(
+              height: 36,
+            ),
             const Text(
               'あなたの手を選んでください',
               style: TextStyle(fontSize: 24),
@@ -49,7 +101,7 @@ class _JankenPageState extends State<JankenPage> {
             ),
             Text(
               myHand,
-              style: TextStyle(fontSize: 32),
+              style: const TextStyle(fontSize: 32),
             ),
             const SizedBox(
               height: 32,
